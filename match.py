@@ -2,6 +2,7 @@ import random
 from operator import itemgetter
 import json
 import copy
+import statistics
 
 def interviewee_time(interviewee):
     print("interviewee time:")
@@ -64,13 +65,8 @@ def is_available(interviewer, team, i):
     for info in interviewer_sorted:
         #info = list(person.values())[0]
         if info['team'] == team and info['availability'][i] == 1 and info['num_int'] < info['max_int']:
-                #info['num_int'] += 1
-                #info['availability'][i] -= 1
-                #info['interviews'].append(i)
             return info['ID']
     return 0
-
-
 
 def simple_match(interviewee, interviewer):
     num_match = 0
@@ -88,7 +84,7 @@ def simple_match(interviewee, interviewer):
                 for p in interviewer:
                     if id1 == list(p.values())[0] or id2 == list(p.values())[0]:
                         p['num_int'] += 1
-                        p['availability'][i] -= 1
+                        p['availability'][i] = -1
                         p['interviews'].append(i)
                 person['final_time'] = i
                 num_match += 1
@@ -111,35 +107,14 @@ def random_match(interviewee, interviewer):
                 for p in interviewer:
                     if id1 == list(p.values())[0] or id2 == list(p.values())[0]:
                         p['num_int'] += 1
-                        p['availability'][i] -= 1
+                        p['availability'][i] = -1
                         p['interviews'].append(i)
                 person['final_time'] = i
                 num_match += 1
                 break
     return num_match
 
-
-def match_all(interviewee, interviewer):
-    print("match all")
-    matched = []
-    itr = 0
-    for person in interviewee:
-        matched.append(person['final_time'])
-    print(matched)
-    while 100 in matched and itr < 100:
-        simple_match(interviewee, interviewer)
-        itr += 1
-    print(itr)
-    for person in interviewee:
-        print(person)
-
-def main():
-    with open('data.txt', 'r') as file:
-        data = json.load(file)
-
-    interviewee = data['interviewee']
-    interviewer = data['interviewer']
-
+def iterated_match(interviewee, interviewer):
     itr = 0
     num_match = 0
     n = len(interviewee)
@@ -168,9 +143,44 @@ def main():
         itr += 1
 
     print("num_match={}, itr={}".format(num_match,itr))
-    interviewee = list(best_case.values())[0][0]
-    interviewer = list(best_case.values())[0][1]
+    e = list(best_case.values())[0][0]
+    r = list(best_case.values())[0][1]
+    return [e, r, num_match]
 
+def main():
+    with open('data.txt', 'r') as file:
+        data = json.load(file)
+
+    interviewee = data['interviewee']
+    interviewer = data['interviewer']
+
+    min_std = 10000
+    max_match = 0
+    best = []
+    for i in range(50):
+        temp_interviewee = copy.deepcopy(interviewee)
+        temp_interviewer = copy.deepcopy(interviewer)
+
+        info = iterated_match(temp_interviewee, temp_interviewer)
+        interviewee_matched = info[0]
+        interviewer_matched = info[1]
+        num_match = info[2]
+        loss = 0
+        num_p = 0
+        for person in interviewer_matched:
+            if len(person['interviews']) > 1:
+                loss += statistics.pstdev(person['interviews'])
+                num_p += 1
+        mean_loss = loss/num_p
+        print(mean_loss)
+        if num_match >= max_match and mean_loss < min_std:
+            best = [interviewee_matched, interviewer_matched]
+            min_std = mean_loss
+            max_match = num_match
+
+
+    interviewee = best[0]
+    interviewer = best[1]
     print('interviewees:')
     for person in interviewee:
         print(person)

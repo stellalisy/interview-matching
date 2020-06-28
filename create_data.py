@@ -27,10 +27,13 @@ def create_interviewer(n):
     print("interviewers")
     interviewer = []
     id_list = random.sample(range(10000,20000), n)
+    team_list = [1,2,3,4,5]*((int)(n/5)+1)
+    team_list = team_list[:n]
+    random.shuffle(team_list)
     for i in range(n):
         person = {}
         #person_with_id = {}
-        zero_count = random.randint(10, 25)
+        zero_count = random.randint(15, 25)
         one_count = 30 - zero_count
         my_list = [0]*zero_count + [1]*one_count
         random.shuffle(my_list)
@@ -38,7 +41,7 @@ def create_interviewer(n):
         ID = id_list[i]
         person['ID'] = ID
         person['name'] = 'name'
-        person['team'] = random.randint(1,5)
+        person['team'] = team_list[i]
         person['availability'] = my_list
         person['max_int'] = random.randint(4, 7)
         person['num_int'] = 0
