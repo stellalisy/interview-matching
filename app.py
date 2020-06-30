@@ -1,7 +1,13 @@
 # import the Flask class from the flask module
-from flask import Flask, render_template, redirect, \
-    url_for, request, session, flash, json
 from functools import wraps
+from flask import Flask, Markup, render_template, make_response
+from flask import redirect, request, url_for, session, flash, json
+
+import os
+import datetime
+import random, string
+
+import math
 
 # create the application object
 app = Flask(__name__)
@@ -34,8 +40,7 @@ def home():
 def login():
     error = None
     if request.method == 'POST':
-        if (request.form['username'] != 'admin') \
-                or request.form['password'] != 'admin':
+        if (request.form['username'] != 'admin') or request.form['password'] != 'admin':
             error = 'Invalid Credentials. Please try again.'
         else:
             session['logged_in'] = True
