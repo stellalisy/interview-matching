@@ -84,8 +84,8 @@ def simple_match(interviewee, interviewer):
                 for p in interviewer:
                     if id1 == list(p.values())[0] or id2 == list(p.values())[0]:
                         p['num_int'] += 1
-                        p['availability'][i] = -1
-                        p['interviews'].append(i)
+                        p['availability'][i] += 2
+                        p['interviews'][i] = person['ID']
                 person['final_time'] = i
                 num_match += 1
                 break
@@ -107,8 +107,8 @@ def random_match(interviewee, interviewer):
                 for p in interviewer:
                     if id1 == list(p.values())[0] or id2 == list(p.values())[0]:
                         p['num_int'] += 1
-                        p['availability'][i] = -1
-                        p['interviews'].append(i)
+                        p['availability'][i] += 2
+                        p['interviews'][i] = person['ID']
                 person['final_time'] = i
                 num_match += 1
                 break
@@ -142,7 +142,7 @@ def iterated_match(interviewee, interviewer):
             best_match = num_match
         itr += 1
 
-    print("num_match={}, itr={}".format(num_match,itr))
+    #print("num_match={}, itr={}".format(num_match,itr))
     e = list(best_case.values())[0][0]
     r = list(best_case.values())[0][1]
     return [e, r, num_match]
@@ -157,7 +157,7 @@ def main():
     min_std = 10000
     max_match = 0
     best = []
-    for i in range(50):
+    for i in range(100):
         temp_interviewee = copy.deepcopy(interviewee)
         temp_interviewer = copy.deepcopy(interviewer)
 
@@ -169,10 +169,10 @@ def main():
         num_p = 0
         for person in interviewer_matched:
             if len(person['interviews']) > 1:
-                loss += statistics.pstdev(person['interviews'])
+                loss += statistics.pstdev(list(person['interviews'].keys()))
                 num_p += 1
         mean_loss = loss/num_p
-        print(mean_loss)
+        #print(mean_loss)
         if num_match >= max_match and mean_loss < min_std:
             best = [interviewee_matched, interviewer_matched]
             min_std = mean_loss
@@ -187,6 +187,7 @@ def main():
     print('interviewers:')
     for person in interviewer:
         print(person)
+    print("num_match={}, std={}".format(max_match, min_std))
 
 
 if __name__ == '__main__':

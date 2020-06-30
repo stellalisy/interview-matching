@@ -9,8 +9,8 @@ def create_interviewee(n):
     for i in range(n):
         person = {}
 
-        zero_count = random.randint(15, 25)
-        one_count = 30 - zero_count
+        one_count = random.randint(5, 10)
+        zero_count = 30 - one_count
         my_list = [0]*zero_count + [1]*one_count
         random.shuffle(my_list)
 
@@ -33,8 +33,8 @@ def create_interviewer(n):
     for i in range(n):
         person = {}
         #person_with_id = {}
-        zero_count = random.randint(15, 25)
-        one_count = 30 - zero_count
+        one_count = random.randint(5, 15)
+        zero_count = 30 - one_count
         my_list = [0]*zero_count + [1]*one_count
         random.shuffle(my_list)
 
@@ -43,10 +43,10 @@ def create_interviewer(n):
         person['name'] = 'name'
         person['team'] = team_list[i]
         person['availability'] = my_list
-        person['max_int'] = random.randint(4, 7)
+        person['max_int'] = random.randint(4, 6)
         person['num_int'] = 0
         person['num_slots'] = one_count
-        person['interviews'] = []
+        person['interviews'] = {}
         #person_with_id[ID] = person
 
         interviewer.append(person)
