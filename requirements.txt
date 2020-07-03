@@ -1,0 +1,7 @@
+flask
+pymongo
+Flask-JWT
+flask_jwt_extended
+
+bcrypt
+pytest
