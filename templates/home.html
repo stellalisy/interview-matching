@@ -1,12 +1,61 @@
-{% extends 'layout.html' %}
-
-{% block css %}
-  <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
-{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-        <h1>{{title}}</h1>
-        <p>{{description}}</p>
+  <div class="card-wrapper">
+
+    <div class="card">
+
+      <h1 class="center">Create an Account</h1>
+
+      <form name="signup_form">
+
+        <label for="name">Name</label>
+        <input type="text" name="name" class="field" required>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" class="field" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" class="field" required>
+
+        <label for="password2">Repeat Password</label>
+        <input type="password" name="password2" class="field" required>
+
+        <label for="role">Interviewer/Interviewee</label>
+        <p>
+             <select name= 'role'>
+                 <option value="Interviewer">Interviewer</option>
+                 <option value="Interviewee">Interviewee</option>
+              </select>
+        </p>
+
+        <p class="error error--hidden"></p>
+
+        <input type="submit" value="Sign Up" class="btn">
+      
+      </form>
+      
     </div>
+
+    <div class="card">
+
+      <h1 class="center">Log In</h1>
+
+      <form name="login_form">
+
+        <label for="email">Email</label>
+        <input type="email" name="email" class="field" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" class="field" required>
+
+        <p class="error error--hidden"></p>
+
+        <input type="submit" value="Log In" class="btn">
+      
+      </form>
+      
+    </div>
+  
+  </div>
 {% endblock %}

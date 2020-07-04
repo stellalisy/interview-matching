@@ -1,76 +1,38 @@
-# import the Flask class from the flask module
+from flask import Flask, render_template, session, redirect
 from functools import wraps
-from flask import Flask, Markup, render_template, make_response
-from flask import redirect, request, url_for, session, flash, json
+import pymongo
 
-import os
-import datetime
-import random, string
-
-import math
-
-# create the application object
 app = Flask(__name__)
+app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
 
-# config
-app.secret_key = 'key'
+# Database
+client = pymongo.MongoClient('localhost', 27017)
+db = client.interview_matcher
 
-
-# login required decorator
+# Decorators
 def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
+  @wraps(f)
+  def wrap(*args, **kwargs):
+    if 'logged_in' in session:
+      return f(*args, **kwargs)
+    else:
+      return redirect('/')
+  
+  return wrap
 
+# Routes
+from user import routes
 
-# use decorators to link the function to a url
 @app.route('/')
-@login_required
 def home():
-    return render_template('index.html')  # render a template
+  return render_template('home.html')
 
-
-# route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if (request.form['username'] != 'admin') or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            session['logged_in'] = True
-            flash('You are logged in.')
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
-
-
-@app.route('/logout')
+@app.route('/dashboard/')
 @login_required
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out.')
-    return redirect(url_for('home'))
-
-
-@app.route('/availability_e')
-@login_required
-def availability_interviewee():
-    if request.method == 'POST':
-        flash('Saved')
-    return render_template('availability_e.html')
-
-
-@app.route('/check_e')
-@login_required
-def check_interviewee():
-    return render_template('check_e.html')
-
-
-# start the server with the 'run()' method
-if __name__ == '__main__':
-    app.run(debug=True)
+def dashboard():
+  print(session['user']['role'])
+  if session['user']['email'] == "hophacks@gmail.com":
+    return render_template('dashboard-admin.html')
+  if session['user']['role'] == "Interviewer":
+    return render_template('dashboard-interviewer.html')
+  return render_template('dashboard-interviewee.html')
