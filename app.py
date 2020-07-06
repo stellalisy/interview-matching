@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, redirect
 from functools import wraps
 import pymongo
+from flask_gridify import FlaskGridify
 
 app = Flask(__name__)
 app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
@@ -8,6 +9,8 @@ app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
 # Database
 client = pymongo.MongoClient('localhost', 27017)
 db = client.interview_matcher
+
+grid = FlaskGridify(app, flask_sqlalchemy_db=db, root_url_prefix='/grids')
 
 # Decorators
 def login_required(f):

@@ -4,6 +4,7 @@
 # This module is part of SQLAlchemy and is released under
 # the MIT License: http://www.opensource.org/licenses/mit-license.php
 
+from .base import ischema_names
 from ... import types as sqltypes
 
 
@@ -107,12 +108,18 @@ class INT4RANGE(RangeOperators, sqltypes.TypeEngine):
     __visit_name__ = "INT4RANGE"
 
 
+ischema_names["int4range"] = INT4RANGE
+
+
 class INT8RANGE(RangeOperators, sqltypes.TypeEngine):
     """Represent the PostgreSQL INT8RANGE type.
 
     """
 
     __visit_name__ = "INT8RANGE"
+
+
+ischema_names["int8range"] = INT8RANGE
 
 
 class NUMRANGE(RangeOperators, sqltypes.TypeEngine):
@@ -123,12 +130,18 @@ class NUMRANGE(RangeOperators, sqltypes.TypeEngine):
     __visit_name__ = "NUMRANGE"
 
 
+ischema_names["numrange"] = NUMRANGE
+
+
 class DATERANGE(RangeOperators, sqltypes.TypeEngine):
     """Represent the PostgreSQL DATERANGE type.
 
     """
 
     __visit_name__ = "DATERANGE"
+
+
+ischema_names["daterange"] = DATERANGE
 
 
 class TSRANGE(RangeOperators, sqltypes.TypeEngine):
@@ -139,9 +152,15 @@ class TSRANGE(RangeOperators, sqltypes.TypeEngine):
     __visit_name__ = "TSRANGE"
 
 
+ischema_names["tsrange"] = TSRANGE
+
+
 class TSTZRANGE(RangeOperators, sqltypes.TypeEngine):
     """Represent the PostgreSQL TSTZRANGE type.
 
     """
 
     __visit_name__ = "TSTZRANGE"
+
+
+ischema_names["tstzrange"] = TSTZRANGE

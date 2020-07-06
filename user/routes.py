@@ -21,3 +21,7 @@ def update_interviewer():
 @app.route('/interviewee/update', methods=['POST'])
 def update_interviewee():
   return User().update_interviewee()
+
+@app.route('/admin/update', methods=['POST'])
+def update_admin():
+  return User().update_admin()

@@ -71,7 +71,7 @@ class User:
 
   def update_interviewer(self):
     user = session['user']
-    print(user['_id'])
+    print("update interviewer")
 
     query = {"_id" : user['_id']}
     newvalues = {"$set": {
@@ -85,8 +85,7 @@ class User:
 
   def update_interviewee(self):
     user = session['user']
-    print("defined user")
-    print(user['_id'])
+    print("update interviewee")
 
     query = {"_id" : user['_id']}
     newvalues = {"$set": {
@@ -98,5 +97,20 @@ class User:
 
     return jsonify(user), 200
 
+  def update_admin(self):
+    user = session['user']
+    print("update admin")
+
+    query = {"_id" : user['_id']}
+    newvalues = {"$set": {
+                    'start_date': request.form.get('start_date'),
+                    'end_date': request.form.get('end_date'),
+                    'start_time': request.form.get('start_time'),
+                    'end_time': request.form.get('end_time')
+                } }
+    
+    db.users.update_one(query, newvalues);
+
+    return jsonify(user), 200
 
 

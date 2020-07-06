@@ -196,3 +196,35 @@ input[type=submit] {
   margin: 34px auto 24px;
   display: block;
 }
+
+
+#size {
+    min-width: 300px;
+}
+
+#grids {
+    margin: 4px;
+    padding: 5px;
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 7px;
+}
+
+.row {
+    display: flex;
+    flow-direction: row;
+}
+
+.grid {
+    background: #8888bb;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.grid:hover {
+    border-color: #E68B8B;
+    color: #8888bb;
+    cursor: pointer;
+}
