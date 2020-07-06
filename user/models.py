@@ -70,29 +70,32 @@ class User:
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def update_interviewer(self):
+    user = session['user']
     print(user['_id'])
-    db.users.update(
-      {_id: user['_id']},
-      { 
-        '$set': {
-          'team': request.form.get('team'),
-          'max_int': request.form.get('max_int')
-        }
-      }
-    )
+
+    query = {"_id" : user['_id']}
+    newvalues = {"$set": {
+                    'max_int': request.form.get('max_int'),
+                    'team': request.form.get('team')
+                } }
+    
+    db.users.update_one(query, newvalues);
+
     return jsonify(user), 200
 
   def update_interviewee(self):
+    user = session['user']
+    print("defined user")
     print(user['_id'])
-    db.users.update(
-      {_id: user['_id']},
-      { 
-        '$set': {
-          'interest1': request.form.get('interest1'),
-          'interest2': request.form.get('interest2')
-        }
-      }
-    )
+
+    query = {"_id" : user['_id']}
+    newvalues = {"$set": {
+                    'interest1': request.form.get('interest1'),
+                    'interest2': request.form.get('interest2')
+                } }
+    
+    db.users.update_one(query, newvalues);
+
     return jsonify(user), 200
 
 

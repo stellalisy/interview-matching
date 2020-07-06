@@ -43,19 +43,40 @@ $("form[name=login_form").submit(function(e) {
 });
 
 
-$("form[name=update_interviewer").submit(function(e) {
+$("form[name=interviewer_form").submit(function(e) {
 
   var $form = $(this);
   var $error = $form.find(".error");
   var data = $form.serialize();
 
   $.ajax({
-    url: "/dashboard/",
+    url: "/interviewer/update",
     type: "POST",
     data: data,
     dataType: "json",
     success: function(resp) {
-      window.location.href = "/saved/";
+      window.location.href = "/success/";
+    },
+    error: function(resp) {
+      $error.text(resp.responseJSON.error).removeClass("error--hidden");
+    }
+  });
+
+  e.preventDefault();
+});
+
+$("form[name=interviewee_form").submit(function(e) {
+  var $form = $(this);
+  var $error = $form.find(".error");
+  var data = $form.serialize();
+
+  $.ajax({
+    url: "/interviewee/update",
+    type: "POST",
+    data: data,
+    dataType: "json",
+    success: function(resp) {
+      window.location.href = "/success/";
     },
     error: function(resp) {
       $error.text(resp.responseJSON.error).removeClass("error--hidden");

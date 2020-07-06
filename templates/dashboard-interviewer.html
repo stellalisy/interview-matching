@@ -22,13 +22,13 @@
 
     <div class="card">
 
-      <h1 class="center">Create an Account</h1>
+      <h1 class="center">Availability</h1>
 
-      <form name="signup_form">
+      <form name="interviewer_form">
 
         <label for="max_int">Maximum number of interviews you can do:</label>
         <p>
-             <select name= 'role'>
+             <select name= 'max_int'>
                 <option></option>
                 <option value=4>4</option>
                 <option value=5>5</option>
@@ -40,17 +40,18 @@
 
         <label for="team">Which team are you on:</label>
         <p>
-             <select name= 'role'>
+             <select name= 'team'>
                 <option></option>
+                <option value="Logistics">Transport/Logistics/Food</option>
                 <option value="Social/PR">Social/PR</option>
                 <option value="Sponsors">Sponsors</option>
-                <option value="Logistics">Logistics</option>
                 <option value="Website">Website</option>
                 <option value="Design">Design</option>
+                <option value="Membership">Membership</option>
               </select>
         </p>
 
-        <label for="role">Time Available (please select all that apply)</label>
+        <label for="time">Time Available (please select all that apply)</label>
         <script src="jquery.js"></script> 
         <script> 
           $(function(){

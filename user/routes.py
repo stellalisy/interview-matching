@@ -14,10 +14,10 @@ def signout():
 def login():
   return User().login()
 
-@app.route('/user/update', methods=['POST'])
+@app.route('/interviewer/update', methods=['POST'])
 def update_interviewer():
-  return User().update()
+  return User().update_interviewer()
 
-@app.route('/user/update', methods=['POST'])
+@app.route('/interviewee/update', methods=['POST'])
 def update_interviewee():
-  return User().update()
+  return User().update_interviewee()

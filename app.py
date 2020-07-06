@@ -35,4 +35,9 @@ def dashboard():
     return render_template('dashboard-admin.html')
   if session['user']['role'] == "Interviewer":
     return render_template('dashboard-interviewer.html')
-  return render_template('dashboard-interviewee.html')
+  else:
+    return render_template('dashboard-interviewee.html')
+
+@app.route('/success/')
+def success():
+  return render_template('success.html')
