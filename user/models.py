@@ -3,19 +3,6 @@ from passlib.hash import pbkdf2_sha256
 from app import db
 import uuid
 
-from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import (StringField,
-                     TextField,
-                     TextAreaField,
-                     SubmitField,
-                     PasswordField,
-                     DateField,
-                     SelectField)
-from wtforms.validators import (DataRequired,
-                                Email,
-                                EqualTo,
-                                Length,
-                                URL)
 
 class User:
 
@@ -89,6 +76,7 @@ class User:
 
     query = {"_id" : user['_id']}
     newvalues = {"$set": {
+                    'year': request.form.get('year'),
                     'interest1': request.form.get('interest1'),
                     'interest2': request.form.get('interest2')
                 } }
