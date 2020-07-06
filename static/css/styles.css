@@ -88,7 +88,7 @@ option {
 .card {
   margin: 0 30px 60px;
   padding: 20px 40px;
-  width: 460px;
+  min-width: 460px;
   box-shadow: 0 8px 26px -4px rgba(0,0,0,0.15);
   border-radius: 5px;
   background: var(--white);
@@ -216,7 +216,15 @@ input[type=submit] {
 }
 
 .grid {
-    background: #8888bb;
+    background: #adade4;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.grid_label {
+    background: #adade4;
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
     border-radius: 5px;
@@ -224,7 +232,13 @@ input[type=submit] {
 }
 
 .grid:hover {
-    border-color: #E68B8B;
+    border-color: #adade4;
     color: #8888bb;
+    cursor: pointer;
+}
+
+.grid:click {
+    border-color: #c2e4ad;
+    color: #FFFFFF;
     cursor: pointer;
 }
