@@ -3,6 +3,7 @@
 */
 
 /* Setup */
+
 :root {
   --black: #000000;
   --almost-black: #263238;
@@ -34,6 +35,7 @@ body {
 }
 
 /* Typography */
+
 .center {
   text-align: center;
 }
@@ -77,6 +79,7 @@ option {
 }
 
 /* Cards */
+
 .card-wrapper {
   margin: 0 auto;
   padding: 30px 30px;
@@ -89,7 +92,7 @@ option {
   margin: 0 30px 60px;
   padding: 20px 40px;
   min-width: 460px;
-  box-shadow: 0 8px 26px -4px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 26px -4px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   background: var(--white);
 }
@@ -109,6 +112,7 @@ option {
 }
 
 /* Forms */
+
 form {
   transition: opacity .15s ease;
 }
@@ -136,7 +140,7 @@ label {
   color: var(--almost-black);
   border: 1px solid var(--grey);
   border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   display: block;
   background: var(--almost-white);
   transition: border-color .15s ease;
@@ -160,6 +164,7 @@ label {
 }
 
 /* Buttons */
+
 .btn {
   margin: 0 0 24px;
   padding: 11px 30px 10px;
@@ -197,48 +202,73 @@ input[type=submit] {
   display: block;
 }
 
+input[type=date]:invalid::-webkit-datetime-edit {
+  color: #999;
+}
+
 
 #size {
-    min-width: 300px;
+  min-width: 300px;
 }
 
 #grids {
-    margin: 4px;
-    padding: 5px;
-    background: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    border-radius: 7px;
+  margin: 4px;
+  padding: 5px;
+  background: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 7px;
 }
 
 .row {
-    display: flex;
-    flow-direction: row;
+  display: flex;
+  flow-direction: row;
 }
 
 .grid {
-    background: #adade4;
-    color: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    border-radius: 5px;
-    flex: 1;
+  background: #adade4;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  flex: 1;
 }
 
 .grid_label {
-    background: #adade4;
-    color: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    border-radius: 5px;
-    flex: 1;
+  background: #adade4;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  flex: 1;
 }
 
 .grid:hover {
-    border-color: #adade4;
-    color: #8888bb;
-    cursor: pointer;
+  border-color: #adade4;
+  color: #8888bb;
+  cursor: pointer;
 }
 
 .grid:click {
-    border-color: #c2e4ad;
-    color: #FFFFFF;
-    cursor: pointer;
+  border-color: #c2e4ad;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.header-spn, .row-cell, .cell {
+  text-align:right;
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 2px;
+  width: 50px;
+  height: 30px;
+  flex:1;
+}
+
+.cell {
+  border: 1px solid #e2e2e2;
+  background-color: #adade4;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.cell.selected {
+  background-color: #c2e4ad;
 }

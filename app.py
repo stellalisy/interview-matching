@@ -31,9 +31,9 @@ def home():
 @login_required
 def dashboard():
   print(session['user']['role'])
-  if session['user']['email'] == "hophacks@gmail.com":
+  if session['user']['role'] == "Admin":
     return render_template('dashboard-admin.html')
-  if session['user']['role'] == "Interviewer":
+  elif session['user']['role'] == "Interviewer":
     return render_template('dashboard-interviewer.html')
   else:
     return render_template('dashboard-interviewee.html')

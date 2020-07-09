@@ -26,23 +26,20 @@
 
       <form name="admin_form">
 
+        <label for="event">Name of Your Event:</label>
+        <input type="text" id="event" name="event" class="field" required>
+
         <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date">
-
-        <p></p>
-
+        <input type="date" id="start_date" name="start_date" class="field" required>
+        
         <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date">
-
-        <p></p>
-
+        <input type="date" id="end_date" name="end_date" class="field" required>
+        
         <label for="start_time">No Earlier Than:</label>
-        <input type="time" id="start_time" name="start_time">
-
-        <p></p>
+        <input type="time" id="start_time" name="start_time" class="field" required>
 
         <label for="end_time">No Later Than:</label>
-        <input type="time" id="end_time" name="end_time">
+        <input type="time" id="end_time" name="end_time" class="field" required>
 
         <p class="error error--hidden"></p>
 
