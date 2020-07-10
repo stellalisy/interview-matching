@@ -150,19 +150,19 @@
 
           <label htmlFor="time">Time Available (please select all that apply)</label>
 
-          <div class="row">
+          <div className="row">
             <span className="row-cell" key={`row-null`}></span>
             {Array.from({length:this.state.days}).map((o2, i2) => {
               return (
                 <span key={`header-${i2}`} className="header-spn">
-                  {dayjs(this.state.start_date).add(i2, 'day').format('MMDD')}
+                  {dayjs(this.state.start_date).add(i2, 'day').format('MM/DD')}
                 </span>
               )
             })}
           </div>
           {Array.from({ length: this.state.hours * 2 }).map((o1, i1) => {
             return (
-              <div key={`${i1}`} class="row">
+              <div key={`${i1}`} className="row">
                 <span className="row-cell" key={`row-${i1}`}>
                   {i1 % 2 ? '' : this.state.start_time + i1 / 2 + ":00"}
                 </span>

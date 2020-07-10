@@ -67,7 +67,7 @@ class User:
                     'time': data['grid']
                 } }
     
-    db.users.update_one(query, newvalues);
+    db.users.update_one(query, newvalues)
 
     return jsonify(user), 200
 
@@ -86,7 +86,7 @@ class User:
                     'time': data['grid']
                 } }
     
-    db.users.update_one(query, newvalues);
+    db.users.update_one(query, newvalues)
 
     return jsonify(user), 200
 
@@ -103,7 +103,7 @@ class User:
                     'end_time': request.form.get('end_time')
                 } }
     
-    db.users.update_one(query, newvalues);
+    db.users.update_one(query, newvalues)
 
     return jsonify(user), 200
 
