@@ -14,6 +14,14 @@ def signout():
 def login():
   return User().login()
 
+@app.route('/user/check', methods=['POST'])
+def check():
+  return User().check()
+
+@app.route('/user/signout-schedule')
+def signoutSchedule():
+  return User().signoutSchedule()
+
 @app.route('/interviewer/update', methods=['POST'])
 def update_interviewer():
   return User().update_interviewer()

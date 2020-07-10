@@ -41,3 +41,18 @@ def dashboard():
 @app.route('/success/')
 def success():
   return render_template('success.html')
+
+@app.route('/check-schedule/')
+def checkSchedule():
+  return render_template('check-schedule.html')
+
+@app.route('/schedule/')
+@login_required
+def schedule():
+  print(session['user']['role'])
+  if session['user']['role'] == "Admin":
+    return render_template('schedule-admin.html')
+  elif session['user']['role'] == "Interviewer":
+    return render_template('schedule-interviewer.html')
+  else:
+    return render_template('schedule-interviewee.html')

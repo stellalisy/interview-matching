@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, session, redirect, json
+from flask import Flask, jsonify, request, session, redirect, json, flash
 from passlib.hash import pbkdf2_sha256
 from app import db
 import uuid
@@ -7,7 +7,6 @@ class User:
 
   def start_session(self, user):
     del user['password']
-    #del user['password2']
     session['logged_in'] = True
     session['user'] = user
     return jsonify(user), 200
@@ -43,6 +42,10 @@ class User:
   def signout(self):
     session.clear()
     return redirect('/')
+
+  def signoutSchedule(self):
+    session.clear()
+    return redirect('/check-schedule/')
   
   def login(self):
     user = db.users.find_one({
@@ -52,6 +55,16 @@ class User:
     if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
       return self.start_session(user)
     
+    return jsonify({ "error": "Invalid login credentials" }), 401
+
+  def check(self):
+    user = db.users.find_one({
+      "email": request.form.get('email')
+    })
+    if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
+      print("print interview schedule")
+      print(user)
+      return self.start_session(user)
     return jsonify({ "error": "Invalid login credentials" }), 401
 
   def update_interviewer(self):
@@ -106,5 +119,6 @@ class User:
     db.users.update_one(query, newvalues)
 
     return jsonify(user), 200
+
 
 
