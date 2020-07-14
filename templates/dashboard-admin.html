@@ -5,18 +5,18 @@
   <div class="card-wrapper">
     <div class="card">
       <h1 class="center">Dashboard</h1>
-      <p class="center">You are currently logged in.</p>
+      <p class="center"><br>You are currently logged in.<br><br></p>
       <div class="center">
         <a href="/user/signout" class="btn btn--secondary">Sign Out</a>
       </div>
     </div>
 
     <div class="card">
-      <h2 class="center">Your Info</h2>
+      <h1 class="center">Your Info</h1>
       <p>
         <strong>Name:</strong> {{ session['user']['name'] }}<br>
         <strong>Email:</strong> {{ session['user']['email'] }}<br>
-        <strong>Role:</strong> {{ "Interviewer" }}
+        <strong>Role:</strong> {{ session['user']['role'] }}
       </p>
     </div>
 
@@ -36,10 +36,115 @@
         <input type="date" id="end_date" name="end_date" class="field" required>
         
         <label for="start_time">No Earlier Than:</label>
-        <input type="time" id="start_time" name="start_time" class="field" required>
+        <p>
+          <select type="number" id="start_time" name="start_time" class="field" required>
+            <option></option>
+            <option value=0>12:00AM</option>
+            <option value=1>12:30AM</option>
+            <option value=2>1:00AM</option>
+            <option value=3>1:30AM</option>
+            <option value=4>2:00AM</option>
+            <option value=5>2:30AM</option>
+            <option value=6>3:00AM</option>
+            <option value=7>3:30AM</option>
+            <option value=8>4:00AM</option>
+            <option value=9>4:30AM</option>
+            <option value=10>5:00AM</option>
+            <option value=11>5:30AM</option>
+            <option value=12>6:00AM</option>
+            <option value=13>6:30AM</option>
+            <option value=14>7:00AM</option>
+            <option value=15>7:30AM</option>
+            <option value=16>8:00AM</option>
+            <option value=17>8:30AM</option>
+            <option value=18>9:00AM</option>
+            <option value=19>9:30AM</option>
+            <option value=20>10:00AM</option>
+            <option value=21>10:30AM</option>
+            <option value=22>11:00AM</option>
+            <option value=23>11:30AM</option>
+            <option value=24>12:00PM</option>
+            <option value=25>12:30PM</option>
+            <option value=26>1:00PM</option>
+            <option value=27>1:30PM</option>
+            <option value=28>2:00PM</option>
+            <option value=29>2:30PM</option>
+            <option value=30>3:00PM</option>
+            <option value=31>3:30PM</option>
+            <option value=32>4:00PM</option>
+            <option value=33>4:30PM</option>
+            <option value=34>5:00PM</option>
+            <option value=35>5:30PM</option>
+            <option value=36>6:00PM</option>
+            <option value=37>6:30PM</option>
+            <option value=38>7:00PM</option>
+            <option value=39>7:30PM</option>
+            <option value=40>8:00PM</option>
+            <option value=41>8:30PM</option>
+            <option value=42>9:00PM</option>
+            <option value=43>9:30PM</option>
+            <option value=44>10:00PM</option>
+            <option value=45>10:30PM</option>
+            <option value=46>11:00PM</option>
+            <option value=47>11:30PM</option>
+          </select >
+        </p >
 
         <label for="end_time">No Later Than:</label>
-        <input type="time" id="end_time" name="end_time" class="field" required>
+        <p>
+          <select type="number" id="end_time" name="end_time" class="field" required>
+            <option></option>
+            <option value=0>12:00AM</option>
+            <option value=1>12:30AM</option>
+            <option value=2>1:00AM</option>
+            <option value=3>1:30AM</option>
+            <option value=4>2:00AM</option>
+            <option value=5>2:30AM</option>
+            <option value=6>3:00AM</option>
+            <option value=7>3:30AM</option>
+            <option value=8>4:00AM</option>
+            <option value=9>4:30AM</option>
+            <option value=10>5:00AM</option>
+            <option value=11>5:30AM</option>
+            <option value=12>6:00AM</option>
+            <option value=13>6:30AM</option>
+            <option value=14>7:00AM</option>
+            <option value=15>7:30AM</option>
+            <option value=16>8:00AM</option>
+            <option value=17>8:30AM</option>
+            <option value=18>9:00AM</option>
+            <option value=19>9:30AM</option>
+            <option value=20>10:00AM</option>
+            <option value=21>10:30AM</option>
+            <option value=22>11:00AM</option>
+            <option value=23>11:30AM</option>
+            <option value=24>12:00PM</option>
+            <option value=25>12:30PM</option>
+            <option value=26>1:00PM</option>
+            <option value=27>1:30PM</option>
+            <option value=28>2:00PM</option>
+            <option value=29>2:30PM</option>
+            <option value=30>3:00PM</option>
+            <option value=31>3:30PM</option>
+            <option value=32>4:00PM</option>
+            <option value=33>4:30PM</option>
+            <option value=34>5:00PM</option>
+            <option value=35>5:30PM</option>
+            <option value=36>6:00PM</option>
+            <option value=37>6:30PM</option>
+            <option value=38>7:00PM</option>
+            <option value=39>7:30PM</option>
+            <option value=40>8:00PM</option>
+            <option value=41>8:30PM</option>
+            <option value=42>9:00PM</option>
+            <option value=43>9:30PM</option>
+            <option value=44>10:00PM</option>
+            <option value=45>10:30PM</option>
+            <option value=46>11:00PM</option>
+            <option value=47>11:30PM</option>
+          </select >
+        </p >
+
 
         <p class="error error--hidden"></p>
 

@@ -1,26 +1,79 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1 class="center">Admin Page</h1>
   <div class="card-wrapper">
     <div class="card">
       <h1 class="center">Dashboard</h1>
-      <p class="center">You are currently logged in.</p>
+      <p class="center"><br>You are currently logged in.<br><br></p>
       <div class="center">
         <a href="/user/signout-schedule" class="btn btn--secondary">Sign Out</a>
       </div>
     </div>
 
     <div class="card">
-      <h2 class="center">Interview Summary</h2>
+      <h1 class="center">Interview Summary</h1>
       <p>
         <strong>Name:</strong> {{ session['user']['name'] }}<br>
-        <strong>Email:</strong> {{ session['user']['email'] }}<br>
-        <strong>Role:</strong> {{ "Interviewer" }}
+        <strong>Role:</strong> {{ session['user']['role'] }}<br>
+        <strong>Team:</strong> {{ session['user']['team'] }}<br>
+        <strong>Interviews:</strong> {{ session['user']['num_int'] }} interview(s) in total.<br>
+        <table>
+          <thead>
+            <th>Time</th>
+            <th>Interviewee</th>
+          </thead>
+          <tbody id="tbody">
+
+          </tbody>
+        </table>
       </p>
     </div>
 
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $.ajax({
+        url: "/get-time",
+        type: "GET",
+        success: function(result){
+          var start_date = result['start_date'];
+          var start_time = result['start_time'];
+          var days = result['days'];
+          var hours = result['hours'];
+          var num_int = result['num_int'];
+          var interviews = result['interviews'];
+          console.log(result);
+          for(var i = 0; i < num_int; i++){
+            var time = interviews[i][0];
+            var day = Math.floor(time/hours);
+            var time_slot = (time - day*hours) % hours + parseInt(start_time,10);
+            var half = time_slot % 2 ? ":30" : ":00";
+            if (time_slot < 24){
+              var am = "AM";
+              var hour = Math.floor(time_slot/2);
+            } else {
+              var am = "PM";
+              var hour = Math.floor((time_slot - 24)/2);
+            }
+            var date = dayjs(start_date).add(day, 'day');
+
+            var final = date.format('MM/DD') + " " + hour.toString(10) + half + am;
+            var interviewee = interviews[i][1][1];
+
+            var Html="<tr>\
+              <td>"+ final +"</td>\
+              <td>"+ interviewee +"</td>\
+            </tr>";
+            $('#tbody').append(Html);
+          }
+        },
+        error: function(error){
+          console.log('Error ${error}')
+        }
+      })
+    });
+  </script>
 
 
 {% endblock %}

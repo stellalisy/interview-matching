@@ -5,14 +5,14 @@
 
   <div class="card">
     <h1 class="center">Dashboard</h1>
-    <p class="center">You are currently logged in.</p>
+    <p class="center"><br>You are currently logged in.<br><br></p>
     <div class="center">
       <a href="/user/signout" class="btn btn--secondary">Sign Out</a>
     </div>
   </div>
 
   <div class="card">
-    <h2 class="center">Your Info</h2>
+    <h1 class="center">Your Info</h1>
     <p>
       <strong>Name:</strong> {{ session['user']['name'] }}<br>
       <strong>Email:</strong> {{ session['user']['email'] }}<br>
@@ -33,36 +33,32 @@
   class Grid extends React.Component {
     constructor(props) {
       super(props);
+      // this.state = { start_date: '', start_time: null, end_date: '', end_time: null, days: 0, hours: 0, interest1: '', interest2: '', grid: null };
       this.state = { start_date: '', start_time: null, days: 0, hours: 0, interest1: '', interest2: '', grid: null };
     }
 
-
     componentDidMount() {
-      // this.request = $.get(this.props.url, function (result) {
-      //     var { start_date, end_date, start_time, end_time } = result;
-      //     this.setState({
-      //         start_date, end_date, start_time, end_time
-      //     });
-      // }.bind(this));
-      var mongo = require('mongodb');
-      var assert = require('assert');
-      var url = 'mongodb://localhost:27017/loodgieters';
+      fetch('/get-time', {
+        method: 'GET',
+      }).then(res => res.json())
+        .then(json => {             
+            this.setState({
+                start_date: json.start_date,
+                // end_date: json.end_date,
+                start_time: parseInt(json.start_time, 10),
+                // end_time: parseInt(json.end_time, 10),
+                days: json.days,
+                hours: json.hours
+            })
+      });
 
+      var days = 20
+      var hours = 20
+      var grid = Array(hours).fill(0).map(item => Array(days).fill(0))
 
-      var start_date = '2020-07-01'
-      var end_date = '2020-07-05'
-      var start_time = 9
-      var end_time = 12
-      var days = dayjs(end_date).diff(dayjs(start_date), 'day')
-      var hours = end_time - start_time
-      var grid = Array(hours * 2).fill(0).map(item => Array(days).fill(0))
 
       this.setState({
-        start_date,
-        start_time,
         grid,
-        days,
-        hours,
       });
     }
 
@@ -132,7 +128,7 @@
           
           <label htmlFor="interest1">Interest 1</label>
           <p>
-            <select name='interest1' value={this.state.interest1} onChange={e => this.handleChangeInterest1(e)}>
+            <select name='interest1' className="field" value={this.state.interest1} onChange={e => this.handleChangeInterest1(e)}>
               <option></option>
               <option value="Logistics">Transport/Logistics/Food</option>
               <option value="Social/PR">Social/PR</option>
@@ -145,7 +141,7 @@
 
           <label htmlFor="interest2">Interest 2</label>
           <p>
-            <select name='interest2' value={this.state.interest2} onChange={e => this.handleChangeInterest2(e)}>
+            <select name='interest2' className="field" value={this.state.interest2} onChange={e => this.handleChangeInterest2(e)}>
               <option></option>
               <option value="Logistics">Transport/Logistics/Food</option>
               <option value="Social/PR">Social/PR</option>
@@ -158,21 +154,21 @@
 
           <label htmlFor="time">Time Available (please select all that apply)</label>
 
-          <div class="row">
+          <div className="row">
             <span className="row-cell" key={`row-null`}></span>
             {Array.from({length:this.state.days}).map((o2, i2) => {
               return (
-                <span key={`header-${i2}`} className="header-spn">
+                <span key={`header-${i2}`} className="header-date">
                   {dayjs(this.state.start_date).add(i2, 'day').format('MM/DD')}
                 </span>
               )
             })}
           </div>
-          {Array.from({ length: this.state.hours * 2 }).map((o1, i1) => {
+          {Array.from({ length: this.state.hours }).map((o1, i1) => {
             return (
-              <div key={`${i1}`} class="row">
+              <div key={`${i1}`} className="row">
                 <span className="row-cell" key={`row-${i1}`}>
-                  {i1 % 2 ? '' : this.state.start_time + i1 / 2 + ":00"}
+                  {(this.state.start_time + i1) % 2 ? Math.floor((this.state.start_time % 24) / 2) + i1 / 2 + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : (this.state.start_time % 24) / 2 + i1 / 2 + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
                 </span>
                 {Array.from({ length: this.state.days }).map((o2, i2) => {
                   return (<span className={this.state.grid[i1][i2] ? 'cell selected' : 'cell'} key={`${i1}-${i2}`} onClick={() => this.toggle(i1, i2)}></span>)

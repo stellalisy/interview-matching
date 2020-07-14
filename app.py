@@ -25,6 +25,7 @@ from user import routes
 
 @app.route('/')
 def home():
+  session.clear()
   return render_template('home.html')
 
 @app.route('/dashboard/')
@@ -44,6 +45,7 @@ def success():
 
 @app.route('/check-schedule/')
 def checkSchedule():
+  session.clear()
   return render_template('check-schedule.html')
 
 @app.route('/schedule/')

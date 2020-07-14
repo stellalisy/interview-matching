@@ -17,7 +17,7 @@ def get_roles(data):
                 num_slots += sum(day)
             user['time'] = availability
             user['num_slots'] = num_slots
-            user.pop('password', None)
+            #user.pop('password', None)
             interviewee.append(user)
         elif user['role'] == 'Interviewer':
             num_slots = 0
@@ -28,7 +28,7 @@ def get_roles(data):
             user['time'] = availability
             user['num_slots'] = num_slots
             user['max_int'] = int(user['max_int'])
-            user.pop('password', None)
+            #user.pop('password', None)
             interviewer.append(user)
         
     for person in interviewee:
@@ -66,7 +66,7 @@ def simple_match(interviewee, interviewer):
                     if id1 == p['_id'] or id2 == p['_id']:
                         p['num_int'] += 1
                         p['time'][i] += 2
-                        p['interviews'][i] = person['_id']
+                        p['interviews'][i] = [person['_id'], person['name']]
                 person['final_time'] = i
                 num_match += 1
                 break
@@ -89,7 +89,7 @@ def random_match(interviewee, interviewer):
                     if id1 == p['_id'] or id2 == p['_id']:
                         p['num_int'] += 1
                         p['time'][i] += 2
-                        p['interviews'][i] = person['_id']
+                        p['interviews'][i] = [person['_id'], person['name']]
                 person['final_time'] = i
                 num_match += 1
                 break
@@ -137,7 +137,7 @@ def iterated_match(interviewee, interviewer):
     return [ee, er, num_match]
 
 def main():
-    with open('data.json', 'r') as file:
+    with open('from_mongo.json', 'r') as file:
         data = json.load(file)
 
     people = get_roles(data)
@@ -147,7 +147,7 @@ def main():
     min_std = 10000
     max_match = 0
     best = []
-    for i in range(50):
+    for i in range(100):
         int(i)
         temp_interviewee = copy.deepcopy(interviewee)
         temp_interviewer = copy.deepcopy(interviewer)
@@ -177,30 +177,18 @@ def main():
 
     interviewee = best[0]
     interviewer = best[1]
-    print('interviewees:')
-    for person in interviewee:
-        person.pop('name', None)
-        person.pop('email', None)
-        person.pop('role', None)
-        person.pop('interest1', None)
-        person.pop('interest2', None)
-        person.pop('time', None)
-        person.pop('year', None)
-        person.pop('num_slots', None)
-        print(person)
-    print('interviewers:')
+
     for person in interviewer:
-        person.pop('name', None)
-        person.pop('email', None)
-        person.pop('role', None)
-        person.pop('team', None)
-        person.pop('max_int', None)
-        person.pop('time', None)
-        person.pop('num_slots', None)
-        print(person)
+        int_list = []
+        for key, value in person['interviews'].items():
+            int_list.append([key,value])
+        int_list = sorted(int_list, key=lambda x: x[0])
+        person['interviews'] = int_list
     print("num_match={}, std={}".format(max_match, min_std))
 
-    all_data = {'interviewee': interviewee, 'interviewer':interviewer}
+    all_data = interviewee
+    all_data.extend(interviewer)
+
     with open('matched.json', 'w') as file:
         file.write(json.dumps(all_data))
 

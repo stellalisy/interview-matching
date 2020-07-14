@@ -33,3 +33,7 @@ def update_interviewee():
 @app.route('/admin/update', methods=['POST'])
 def update_admin():
   return User().update_admin()
+
+@app.route('/get-time', methods=['GET'])
+def get_time():
+  return User().get_time()

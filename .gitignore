@@ -5,3 +5,4 @@ venv
 .env.local
 __pycache__
 *.json
+node_modules

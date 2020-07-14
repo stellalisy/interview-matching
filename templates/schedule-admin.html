@@ -5,18 +5,18 @@
   <div class="card-wrapper">
     <div class="card">
       <h1 class="center">Dashboard</h1>
-      <p class="center">You are currently logged in.</p>
+      <p class="center"><br>You are currently logged in.<br><br></p>
       <div class="center">
         <a href="/user/signout-schedule" class="btn btn--secondary">Sign Out</a>
       </div>
     </div>
 
     <div class="card">
-      <h2 class="center">Interview Summary</h2>
+      <h1 class="center">Interview Summary</h1>
       <p>
         <strong>Name:</strong> {{ session['user']['name'] }}<br>
         <strong>Email:</strong> {{ session['user']['email'] }}<br>
-        <strong>Role:</strong> {{ "Interviewer" }}
+        <strong>Role:</strong> {{ session['user']['role'] }}
       </p>
     </div>
 
