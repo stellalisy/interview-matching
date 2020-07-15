@@ -116,8 +116,15 @@ class User:
       if (db.users.find_one({ "event": request.form.get('event') })['_id'] != session['user']['_id']):
         return jsonify({ "error": "Event name already in use" }), 400
 
-    start_time = int(request.form.get('start_time'))
-    end_time = int(request.form.get('end_time'))
+    start_hour = int(request.form.get('start_hour'))
+    start_half = int(request.form.get('start_half'))
+    start_ampm = int(request.form.get('start_ampm'))
+    end_hour = int(request.form.get('end_hour'))
+    end_half = int(request.form.get('end_half'))
+    end_ampm = int(request.form.get('end_ampm'))
+
+    start_time = start_hour + start_half + start_ampm * 24
+    end_time = end_hour + end_half + end_ampm * 24
     #start_time = int(request.form.get('start_time').split(':')[0])
     #end_time = int(request.form.get('end_time').split(':')[0])
     print(start_time)
@@ -143,8 +150,8 @@ class User:
                     'event': request.form.get('event'),
                     'start_date': request.form.get('start_date'),
                     'end_date': request.form.get('end_date'),
-                    'start_time': request.form.get('start_time'),
-                    'end_time': request.form.get('end_time'),
+                    'start_time': start_time,
+                    'end_time': end_time,
                     'hours': hours,
                     'days': days
                 } }

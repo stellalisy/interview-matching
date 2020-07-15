@@ -4,20 +4,15 @@
 <div class="card-wrapper">
 
   <div class="card">
-    <h1 class="center">Dashboard</h1>
-    <p class="center"><br>You are currently logged in.<br><br></p>
-    <div class="center">
-      <a href="/user/signout" class="btn btn--secondary">Sign Out</a>
-    </div>
-  </div>
-
-  <div class="card">
     <h1 class="center">Your Info</h1>
     <p>
       <strong>Name:</strong> {{ session['user']['name'] }}<br>
       <strong>Email:</strong> {{ session['user']['email'] }}<br>
       <strong>Role:</strong> {{ "Interviewer" }}
     </p>
+    <div class="center">
+      <br><a href="/user/signout" class="btn btn--secondary">Sign Out</a>
+    </div>
   </div>
 
   <div class="card">
@@ -166,7 +161,7 @@
             return (
               <div key={`${i1}`} className="row">
                 <span className="row-cell" key={`row-${i1}`}>
-                  {(this.state.start_time + i1) % 2 ? Math.floor((this.state.start_time % 24) / 2) + i1 / 2 + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : (this.state.start_time % 24) / 2 + i1 / 2 + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
+                  {(this.state.start_time + i1) % 2 ? Math.floor((this.state.start_time % 24) / 2) + Math.floor(i1 / 2) + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : (this.state.start_time % 24) / 2 + i1 / 2 + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
                 </span>
                 {Array.from({ length: this.state.days }).map((o2, i2) => {
                   return (<span className={this.state.grid[i1][i2] ? 'cell selected' : 'cell'} key={`${i1}-${i2}`} onClick={() => this.toggle(i1, i2)}></span>)

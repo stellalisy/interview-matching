@@ -311,3 +311,13 @@ td {
   text-align: center;
   padding: 5px;
 }
+
+select {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 2;
+  margin: 0px;
+  min-width: 31%;
+  height: 42px;
+  margin: 0px 0px 25px 0px;
+}
