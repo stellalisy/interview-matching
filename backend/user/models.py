@@ -62,7 +62,8 @@ class User:
 
   def signoutSchedule(self):
     session.clear()
-    return redirect('/check-schedule/')
+    return jsonify({ "error": "false" })
+    # return redirect('/check-schedule/')
   
   def login(self):
     user = db.users.find_one({

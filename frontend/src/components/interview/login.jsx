@@ -25,7 +25,7 @@ class Login extends React.Component {
   }
 
   // log in
-  async login(e) {
+  async login(e, checkSchedule = false) {
     e.preventDefault();
     var { email, password } = this.state
     try {
@@ -37,7 +37,7 @@ class Login extends React.Component {
       if (error && error !== 'false') {
         this.setState({ error })
       } else {
-        this.props.callback(data)
+        this.props.callback(data, checkSchedule)
       }
     } catch (err) {
       console.log(err)
@@ -48,7 +48,7 @@ class Login extends React.Component {
     return (
       <div className="card">
         <h1 className="center">Log In</h1>
-        <form name="login_form" onSubmit={this.login}>
+        <form name="login_form">
 
           {/* email */}
           <label htmlFor="email">Email</label>
@@ -70,7 +70,8 @@ class Login extends React.Component {
 
           <p className={this.state.error ? "error" : 'error error--hidden'}>{this.state.error}</p>
 
-          <input type="submit" value="Log In" className="btn" />
+          <button onClick={this.login} className="btn" >Log In</button>
+          <button onClick={e => this.login(e, true)} className="btn">Check Interview Schedule</button>
         </form>
       </div>)
   };
