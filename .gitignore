@@ -6,3 +6,7 @@ venv
 __pycache__
 *.json
 node_modules
+dump
+frontend/node_modules
+frontend/package-lock.json
+
