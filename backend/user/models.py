@@ -54,6 +54,7 @@ class User:
   def signout(self): 
     session.clear()
     return jsonify({ "error": "false" })
+    #return redirect('/')
 
   def signoutSchedule(self):
     session.clear()
