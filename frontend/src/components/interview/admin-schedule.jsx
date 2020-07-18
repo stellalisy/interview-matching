@@ -13,9 +13,9 @@ class AdminSchedule extends React.Component {
     var days = result['days'];
     var hours = result['hours'];
     var event = result['event'];
-    var interviews = result['interviews'];
+    var interviews = result['interviews'] || [];
     var num_int = interviews.length;
-    var list = Array(num_int)
+    var list = Array.from({ length: num_int })
 
     return (
       <div className="card">

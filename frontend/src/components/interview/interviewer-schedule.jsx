@@ -14,25 +14,7 @@ class InterviewerSchedule extends React.Component {
     var hours = result['hours'];
     var num_int = result['num_int'];
     var interviews = result['interviews'];
-    var list = Array(num_int)
-
-    for (var i = 0; i < num_int; i++) {
-      var time = interviews[i][0];
-      var day = Math.floor(time / hours);
-      var time_slot = (time - day * hours) % hours + parseInt(start_time, 10);
-      var half = time_slot % 2 ? ":30" : ":00";
-      if (time_slot < 24) {
-        var am = "AM";
-        var hour = Math.floor(time_slot / 2);
-      } else {
-        var am = "PM";
-        var hour = Math.floor((time_slot - 24) / 2);
-      }
-      var date = dayjs(start_date).add(day, 'day');
-
-      var final = date.format('MM/DD') + " " + hour.toString(10) + half + am;
-      var interviewee = interviews[i][1][1];
-    }
+    var list = Array.from({ length: num_int })
 
     return (
       <div className="card">

@@ -87,7 +87,7 @@ class Interview extends React.Component {
               (checkSchedule ?
                 (role === 'Interviewee' ? <IntervieweeSchedule {...res} callback={this.scheduleSignout} />
                   : role === 'Interviewer' ? <InterviewerSchedule {...res} callback={this.scheduleSignout} />
-                    : role === 'Admin' ? <AdminSchedule callback={this.scheduleSignout} /> : ''
+                    : role === 'Admin' ? <AdminSchedule {...res} callback={this.scheduleSignout} /> : ''
                 ) :
                 (success ? <Success callback={this.signout} back={this.onBack} /> :
                   <>
