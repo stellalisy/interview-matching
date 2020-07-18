@@ -21,6 +21,29 @@ class Interviewer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    var {
+      start_date,
+      start_time,
+      days,
+      hours
+    } = this.props
+
+    this.setState({
+      start_date,
+      start_time,
+      days,
+      hours,
+      grid: Array(hours * 2).fill(0).map(() => Array(days).fill(0))
+    })
+  }
+
+  toggle(i1, i2) {
+    var { grid } = this.state
+    grid[i1][i2] = grid[i1][i2] ? 0 : 1
+    this.setState({ grid })
+  }
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -61,8 +84,8 @@ class Interviewer extends React.Component {
               <option value={4}>4</option>
               <option value={5}>5</option>
               <option value={6}>6</option>
-              <option value={7}> 7</option >
-              <option value={8}> 8</option >
+              <option value={7}>7</option >
+              <option value={8}>8</option >
             </select >
           </p >
 
@@ -91,18 +114,28 @@ class Interviewer extends React.Component {
               )
             })}
           </div>
-          {/* {Array.from({ length: this.state.hours }).map((o1, i1) => {
-              return (
-                <div key={`${i1}`} className="row">
-                  <span className="row-cell" key={`row-${i1}`}>
-                    {(this.state.start_time + i1) % 2 ? Math.floor((this.state.start_time % 24) / 2) + Math.floor(i1 / 2) + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : (this.state.start_time % 24) / 2 + i1 / 2 + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
-                  </span>
-                  {Array.from({ length: this.state.days }).map((o2, i2) => {
-                    return (<span className={this.state.grid[i1][i2] ? 'cell selected' : 'cell'} key={`${i1}-${i2}`} onClick={() => this.toggle(i1, i2)}></span>)
-                  })}
-                </div>
-              )
-            })} */}
+          {Array.from({ length: this.state.hours }).map((o1, i1) => {
+            return (
+              <div key={`${i1}`} className="row">
+                <span className="row-cell" key={`row-${i1}`}>
+                  {(this.state.start_time + i1) % 2 ?
+                    Math.floor((this.state.start_time % 24) / 2) +
+                    Math.floor(i1 / 2) + ":30" +
+                    (this.state.start_time < 24 ? "AM" : "PM") :
+                    (this.state.start_time % 24) / 2 + i1 / 2 + ":00" +
+                    (this.state.start_time < 24 ? "AM" : "PM")}
+                </span>
+                {Array.from({ length: this.state.days }).map((o2, i2) => {
+                  return (
+                    <span className={this.state.grid[i1][i2] ? 'cell selected' : 'cell'}
+                      key={`${i1}-${i2}`}
+                      onClick={() => this.toggle(i1, i2)}>
+                    </span>
+                  )
+                })}
+              </div>
+            )
+          })}
           <p className={this.state.error ? "error" : 'error error--hidden'}>{this.state.error}</p>
           <input type="submit" value="Submit" className="btn" />
         </form>

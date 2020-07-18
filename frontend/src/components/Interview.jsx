@@ -10,6 +10,7 @@ class Interview extends React.Component {
     this.state = {
       user: null, // user's role: Interviewee | Interviewer | Admin
       success: false,
+      info: {},
     };
 
     this.setUser = this.setUser.bind(this);
@@ -23,9 +24,17 @@ class Interview extends React.Component {
   }
 
   login = async (user) => {
-    this.setState({ user })
-    var data = await axios.get('/get-time')
-    console.log(data);
+    // var { data: data } = await axios.get('/get-time')
+    var data = {
+      // "end_date": "2020-07-18",
+      // "end_time": 38,
+      // "event": "HopHacks Fall 2020 Interview",
+      "days": 7,
+      "hours": 7,
+      "start_date": "2020-07-15",
+      "start_time": 31
+    }
+    this.setState({ user, info: data })
   }
 
   async signout() {
@@ -45,55 +54,15 @@ class Interview extends React.Component {
     this.setState({ success: false })
   }
 
-  // componentDidMount() {
-  //     // this.request = $.get(this.props.url, (result) {
-  //     //     var { start_date, end_date, start_time, end_time } = result;
-  //     //     this.setState({
-  //     //         start_date, end_date, start_time, end_time
-  //     //     });
-  //     // }.bind(this));
-  //     var start_date = '2020-07-01'
-  //     var end_date = '2020-07-05'
-  //     var start_time = 9
-  //     var end_time = 15
-  //     var days = dayjs(end_date).diff(dayjs(start_date), 'day')
-  //     var hours = end_time - start_time
-  //     var grid = Array(hours * 2).fill(0).map(item => Array(days).fill(0))
-
-  //     this.setState({
-  //         start_date,
-  //         start_time,
-  //         grid,
-  //         days,
-  //         hours,
-  //     });
-  // }
-
-  // toggle(i1, i2) {
-  //     var { grid } = this.state
-  //     grid[i1][i2] = grid[i1][i2] ? 0 : 1
-  //     this.setState({ grid })
-  // }
-
-  // handleChange(event) {
-  //     const target = event.target;
-  //     const value = target.value;
-  //     const name = target.name;
-
-  //     this.setState({
-  //         [name]: value
-  //     });
-  // }
-
   render() {
     var { user, success } = this.state
     var role = user && user.role
     var User
 
     if (role === 'Interviewee') {
-      User = <Interviewee callback={this.onSuccess} />
+      User = <Interviewee {...this.state.info} callback={this.onSuccess} />
     } else if (role === 'Interviewer') {
-      User = <Interviewer callback={this.onSuccess} />
+      User = <Interviewer  {...this.state.info} callback={this.onSuccess} />
     } else if (role === 'Admin') {
       User = <Admin callback={this.onSuccess} />
     }
