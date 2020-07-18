@@ -22,6 +22,12 @@ class Interview extends React.Component {
     this.setState({ user })
   }
 
+  login = async (user) => {
+    this.setState({ user })
+    var data = await axios.get('/get-time')
+    console.log(data);
+  }
+
   async signout() {
     try {
       await axios.get('/user/signout')
@@ -89,7 +95,7 @@ class Interview extends React.Component {
     } else if (role === 'Interviewer') {
       User = <Interviewer callback={this.onSuccess} />
     } else if (role === 'Admin') {
-    User = <Admin callback={this.onSuccess} />
+      User = <Admin callback={this.onSuccess} />
     }
 
     return (
@@ -108,7 +114,7 @@ class Interview extends React.Component {
               ) :
               <>
                 <Signup callback={this.setUser} />
-                <Login callback={this.setUser} />
+                <Login callback={this.login} />
               </>
           }
         </div>

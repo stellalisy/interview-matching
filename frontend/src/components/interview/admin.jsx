@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios'
+import qs from 'qs'
 import { cloneDeep } from 'lodash'
 
 class Interviewee extends React.Component {
@@ -36,7 +37,10 @@ class Interviewee extends React.Component {
     try {
       var state = cloneDeep(this.state)
       Reflect.deleteProperty(state, 'error')
-      var { data: data } = await axios.post('/admin/update', state)
+      var { data: data } = await axios.post('/admin/update',
+        qs.stringify(state),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+      )
 
       var error = data.error
       if (error && error !== 'false') {
@@ -115,7 +119,7 @@ class Interviewee extends React.Component {
               <option value={18}>9</option>
               <option value={20}>10</option>
               <option value={22}>11</option>
-            </select> : 
+            </select> :
 
             {/* start_half */}
             <select type="number"
@@ -168,7 +172,7 @@ class Interviewee extends React.Component {
               <option value={18}>9</option>
               <option value={20}>10</option>
               <option value={22}>11</option>
-            </select> : 
+            </select> :
 
             {/* end_half */}
             <select
