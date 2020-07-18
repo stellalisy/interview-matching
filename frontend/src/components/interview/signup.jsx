@@ -100,7 +100,7 @@ class Signup extends React.Component {
           {/* role */}
           <label htmlFor="role">Interviewer/Interviewee</label>
           <p>
-            <select name='role' value={this.state.role} onChange={this.handleChange}>
+            <select class='field' name='role' value={this.state.role} onChange={this.handleChange}>
               <option></option>
               <option value="Interviewer">Interviewer</option>
               <option value="Interviewee">Interviewee</option>

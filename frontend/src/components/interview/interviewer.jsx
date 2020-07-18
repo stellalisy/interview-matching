@@ -106,7 +106,7 @@ class Interviewer extends React.Component {
 
           <div className="row">
             <span className="row-cell" key={`row-null`}></span>
-            {Array.from({ length: this.state.days }).map((o2, i2) => {
+            {Array.from({length:this.state.days}).map((o2, i2) => {
               return (
                 <span key={`header-${i2}`} className="header-date">
                   {dayjs(this.state.start_date).add(i2, 'day').format('MM/DD')}
