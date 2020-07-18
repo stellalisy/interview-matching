@@ -24,16 +24,16 @@ class Interview extends React.Component {
   }
 
   login = async (user) => {
-    // var { data: data } = await axios.get('/get-time')
-    var data = {
+    var { data: data } = await axios.get('/get-time')
+    //var data = {
       // "end_date": "2020-07-18",
       // "end_time": 38,
       // "event": "HopHacks Fall 2020 Interview",
-      "days": 7,
-      "hours": 7,
-      "start_date": "2020-07-15",
-      "start_time": 31
-    }
+      // "days": 7,
+      // "hours": 7,
+      // "start_date": "2020-07-15",
+      // "start_time": 31
+    // }
     this.setState({ user, info: data })
   }
 

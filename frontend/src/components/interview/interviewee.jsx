@@ -106,7 +106,7 @@ class Interviewee extends React.Component {
             </select>
           </p>
 
-          <label htmlFor="time">Time Available (please select all that apply)</label>
+          <label htmlFor="time">Time Available (please select all that apply): </label>
 
           <div className="row">
             <span className="row-cell" key={`row-null`}></span>

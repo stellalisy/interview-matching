@@ -29,7 +29,11 @@ class User:
     }
 
     # Encrypt the password
+    print(user['password'])
+
     user['password'] = sha256_crypt.hash(user['password'])
+    print(user['password'])
+
     #user['password2'] = pbkdf2_sha256.encrypt(user['password2'])
 
     # Check for existing email address
