@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card-wrapper">
+
+  <div class="card">
+    <h1 class="center">Your Info</h1>
+    <p>
+      <strong>Name:</strong> {{ session['user']['name'] }}<br>
+      <strong>Email:</strong> {{ session['user']['email'] }}<br>
+      <strong>Role:</strong> {{ "Interviewee" }}
+    </p>
+    <div class="center">
+      <br><a href="/user/signout" class="btn btn--secondary">Sign Out</a>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <h1 class="center">Availability</h1>
+
+    <div id="form"></div>
+
+  </div>
+</div>
+
+<script type="text/babel">
+  class Grid extends React.Component {
+    constructor(props) {
+      super(props);
+      // this.state = { start_date: '', start_time: null, end_date: '', end_time: null, days: 0, hours: 0, interest1: '', interest2: '', grid: null };
+      this.state = { start_date: '', start_time: null, days: 0, hours: 0, interest1: '', interest2: '', grid: null };
+    }
+
+    componentDidMount() {
+      fetch('/get-time', {
+        method: 'GET',
+      }).then(res => res.json())
+        .then(json => {             
+            this.setState({
+                start_date: json.start_date,
+                // end_date: json.end_date,
+                start_time: parseInt(json.start_time, 10),
+                // end_time: parseInt(json.end_time, 10),
+                days: json.days,
+                hours: json.hours
+            })
+      });
+
+      var days = 20
+      var hours = 20
+      var grid = Array(hours).fill(0).map(item => Array(days).fill(0))
+
+
+      this.setState({
+        grid,
+      });
+    }
+
+    componentWillUnmount() {
+      // this.request.abort();
+    }
+
+    toggle(i1, i2) {
+      var { grid } = this.state
+      grid[i1][i2] = grid[i1][i2] ? 0 : 1
+      this.setState({ grid })
+    }
+
+    handleChangeInterest1(event) {
+      this.setState({ interest1: event.target.value });
+    }
+
+    handleChangeInterest2(event) {
+      this.setState({ interest2: event.target.value });
+    }
+
+    handleSubmit(e) {
+      var formData = {}
+      var grid = []
+      var serializeData = $('#interviewee_form').serialize()
+      var decodeURIData = decodeURIComponent(serializeData)
+      decodeURIData.split('&').forEach(item => {
+        var arr = item.split('=')
+        formData[arr[0]] = arr[1]
+      })
+
+      for (let index = 0; index < this.state.days; index++) {
+        this.state.grid.forEach(item => {
+          if (!grid[index]) {
+            grid[index] = []
+          }
+          grid[index].push(item[index])
+        })
+      }
+
+      const data = {
+        ...formData,
+        grid
+      }
+      $.ajax({
+        type: "POST",
+        url: "/interviewee/update",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify(data),
+          success: function (res) {
+            window.location.href = "/success/";
+            console.log("SUCCESS");
+          },
+          error: function () {
+            console.log("error");
+          }
+        });
+      e.preventDefault();
+    }
+
+    render() {
+      return (
+        <form name="interviewee_form"  id="interviewee_form" onSubmit={e => this.handleSubmit(e)}>
+          <label htmlFor="year">Graduation Year</label>
+          <input type="year" name="year" className="field" required />
+          
+          <label htmlFor="interest1">Interest 1</label>
+          <p>
+            <select name='interest1' className="field" value={this.state.interest1} onChange={e => this.handleChangeInterest1(e)}>
+              <option></option>
+              <option value="Logistics">Transport/Logistics/Food</option>
+              <option value="Social/PR">Social/PR</option>
+              <option value="Sponsors">Sponsors</option>
+              <option value="Website">Website</option>
+              <option value="Design">Design</option>
+              <option value="Membership">Membership</option>
+            </select>
+          </p>
+
+          <label htmlFor="interest2">Interest 2</label>
+          <p>
+            <select name='interest2' className="field" value={this.state.interest2} onChange={e => this.handleChangeInterest2(e)}>
+              <option></option>
+              <option value="Logistics">Transport/Logistics/Food</option>
+              <option value="Social/PR">Social/PR</option>
+              <option value="Sponsors">Sponsors</option>
+              <option value="Website">Website</option>
+              <option value="Design">Design</option>
+              <option value="Membership">Membership</option>
+            </select>
+          </p>
+
+          <label htmlFor="time">Time Available (please select all that apply)</label>
+
+          <div className="row">
+            <span className="row-cell" key={`row-null`}></span>
+            {Array.from({length:this.state.days}).map((o2, i2) => {
+              return (
+                <span key={`header-${i2}`} className="header-date">
+                  {dayjs(this.state.start_date).add(i2, 'day').format('MM/DD')}
+                </span>
+              )
+            })}
+          </div>
+          {Array.from({ length: this.state.hours }).map((o1, i1) => {
+            return (
+              <div key={`${i1}`} className="row">
+                <span className="row-cell" key={`row-${i1}`}>
+                  {(this.state.start_time + i1) % 2 ? Math.floor((this.state.start_time % 24) / 2) + i1 / 2 + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : (this.state.start_time % 24) / 2 + i1 / 2 + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
+                </span>
+                {Array.from({ length: this.state.days }).map((o2, i2) => {
+                  return (<span className={this.state.grid[i1][i2] ? 'cell selected' : 'cell'} key={`${i1}-${i2}`} onClick={() => this.toggle(i1, i2)}></span>)
+                })}
+              </div>
+            )
+          })}
+          <p className="error error--hidden"></p>
+          <input type="submit" value="Submit" className="btn" />
+        </form>
+      )
+    }
+  };
+
+  ReactDOM.render(<Grid url="https://todo" />, document.getElementById('form'));
+</script>
+
+{% endblock %}
