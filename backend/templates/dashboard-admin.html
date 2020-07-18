@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="center">Admin Page</h1>
+  <div class="card-wrapper">
+
+    <div class="card">
+      <h1 class="center">Your Info</h1>
+      <p>
+        <strong>Name:</strong> {{ session['user']['name'] }}<br>
+        <strong>Email:</strong> {{ session['user']['email'] }}<br>
+        <strong>Role:</strong> {{ session['user']['role'] }}
+      </p>
+      <div class="center">
+        <br><a href="/user/signout" class="btn btn--secondary">Sign Out</a>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <h1 class="center">Availability</h1>
+
+      <form name="admin_form">
+
+        <label for="event">Name of Your Event:</label>
+        <input type="text" id="event" name="event" class="field" required>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" class="field"
+              min="2018-01-01" max="2025-12-31" required>
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" class="field"
+              min="2018-01-01" max="2025-12-31" required>
+        
+        <label for="start_time">No Earlier Than:</label>
+        <p>
+          <select type="number" id="start_hour" name="start_hour" required>
+            <option></option>
+            <option value=0>0</option>
+            <option value=2>1</option>
+            <option value=4>2</option>
+            <option value=6>3</option>
+            <option value=8>4</option>
+            <option value=10>5</option>
+            <option value=12>6</option>
+            <option value=14>7</option>
+            <option value=16>8</option>
+            <option value=18>9</option>
+            <option value=20>10</option>
+            <option value=22>11</option>
+          </select> :
+          <select type="number" id="start_half" name="start_half" required>
+            <option></option>
+            <option value=0>00</option>
+            <option value=1>30</option>
+          </select>
+          <select type="number" id="start_ampm" name="start_ampm" required>
+            <option></option>
+            <option value=0>AM</option>
+            <option value=1>PM</option>
+          </select>
+        </p>
+
+        <label for="end_time">No Later Than:</label>
+        <p>
+          <select type="number" id="end_hour" name="end_hour" required>
+            <option></option>
+            <option value=0>0</option>
+            <option value=2>1</option>
+            <option value=4>2</option>
+            <option value=6>3</option>
+            <option value=8>4</option>
+            <option value=10>5</option>
+            <option value=12>6</option>
+            <option value=14>7</option>
+            <option value=16>8</option>
+            <option value=18>9</option>
+            <option value=20>10</option>
+            <option value=22>11</option>
+          </select> :
+          <select type="number" id="end_half" name="end_half" required>
+            <option></option>
+            <option value=0>00</option>
+            <option value=1>30</option>
+          </select>
+          <select type="number" id="end_ampm" name="end_ampm" required>
+            <option></option>
+            <option value=0>AM</option>
+            <option value=1>PM</option>
+          </select>
+        </p>
+
+        <p class="error error--hidden"></p>
+
+        <input type="submit" value="Submit" class="btn">
+      
+      </form>
+      
+    </div>
+  
+  </div>
+
+
+{% endblock %}
