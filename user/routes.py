@@ -37,3 +37,11 @@ def update_admin():
 @app.route('/get-time', methods=['GET'])
 def get_time():
   return User().get_time()
+
+@app.route('/get-interviewee', methods=['GET'])
+def get_interviewee():
+  return User().get_interviewee()
+
+@app.route('/get-role', methods=['GET'])
+def get_role():
+  return User().get_role()

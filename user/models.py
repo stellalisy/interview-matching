@@ -16,7 +16,8 @@ class User:
     print(request.form)
 
     if request.form.get('password') != request.form.get('password2'):
-      return jsonify({ "error": "Passwords don't match" }), 402
+      # return jsonify({ "error": "Passwords don't match" }), 402
+      return jsonify({ "error": "Passwords don't match" })
 
     # Create the user object
     user = {
@@ -33,19 +34,26 @@ class User:
 
     # Check for existing email address
     if db.users.find_one({ "email": user['email'] }):
-      return jsonify({ "error": "Email address already in use" }), 400
+      # return jsonify({ "error": "Email address already in use" }), 400
+      return jsonify({ "error": "Email address already in use" })
 
     if db.users.find_one({ "role": "Admin"}) and user['role'] == "Admin":
-      return jsonify({ "error": "Admin account already signed up" }), 400
+      # return jsonify({ "error": "Admin account already signed up" }), 400
+      return jsonify({ "error": "Admin account already signed up" })
 
     if db.users.insert_one(user):
       return self.start_session(user)
 
-    return jsonify({ "error": "Signup failed" }), 400
+    # return jsonify({ "error": "Signup failed" }), 400
+    return jsonify({ "error": "Signup failed" })
   
-  def signout(self):
+  # def signout(self):
+  #   session.clear()
+  #   return redirect('/')
+
+  def signout(self): 
     session.clear()
-    return redirect('/')
+    return jsonify({ "error": "false" })
 
   def signoutSchedule(self):
     session.clear()
@@ -59,7 +67,8 @@ class User:
     if user and sha256_crypt.verify(request.form.get('password'), user['password']):
       return self.start_session(user)
     
-    return jsonify({ "error": "Invalid login credentials" }), 401
+    # return jsonify({ "error": "Invalid login credentials" }), 401
+    return jsonify({ "error": "Invalid login credentials" })
 
   def check(self):
     user = db.users.find_one({
@@ -69,7 +78,8 @@ class User:
     if user and sha256_crypt.verify(request.form.get('password'), user['password']):
       return self.start_session(user)
       
-    return jsonify({ "error": "Invalid login credentials" }), 401
+    # return jsonify({ "error": "Invalid login credentials" }), 401
+    return jsonify({ "error": "Invalid login credentials" })
 
   def update_interviewer(self):
     user = session['user']
@@ -114,7 +124,8 @@ class User:
     # Check for existing event name
     if db.users.find_one({ "event": request.form.get('event') }):
       if (db.users.find_one({ "event": request.form.get('event') })['_id'] != session['user']['_id']):
-        return jsonify({ "error": "Event name already in use" }), 400
+        # return jsonify({ "error": "Event name already in use" }), 400
+        return jsonify({ "error": "Event name already in use" })
 
     start_hour = int(request.form.get('start_hour'))
     start_half = int(request.form.get('start_half'))
@@ -131,7 +142,8 @@ class User:
     print(end_time)
     hours = end_time - start_time
     if hours <= 0:
-      return jsonify({ "error": "End time has to be later than start time" }), 400
+      # return jsonify({ "error": "End time has to be later than start time" }), 400
+      return jsonify({ "error": "End time has to be later than start time" })
 
     start_date = request.form.get('start_date').split('-')
     end_date = request.form.get('end_date').split('-')
@@ -143,7 +155,8 @@ class User:
     days = delta.days + 1
     print(days)
     if days <= 0:
-      return jsonify({ "error": "End date can't be earlier than start date" }), 400
+      # return jsonify({ "error": "End date can't be earlier than start date" }), 400
+      return jsonify({ "error": "End date can't be earlier than start date" })
     
     query = {"_id" : user['_id']}
     newvalues = {"$set": {
@@ -175,4 +188,54 @@ class User:
       result['num_int'] = user['num_int']
     if 'final_time' in user:
       result['final_time'] = user['final_time']
+    print(result)
+    return jsonify(result), 200
+  
+  def get_interviewee(self):
+    cur_ee = db.users.find({"role": "Interviewee"})
+    
+    user = session['user']
+
+    result = {}
+    if 'event' in user:
+      result['event'] = user['event']
+      result['start_date'] = user['start_date']
+      result['start_time'] = user['start_time']
+      result['days'] = user['days']
+      result['hours'] = user['hours']
+
+
+    all_interviewee = []
+
+    for person in cur_ee:
+      interviewee = {
+              "_id": person['_id'],
+              "name": person['name'],
+              "final_time": person['final_time']
+      }
+      interviewers = []
+      cur_er = db.users.find({"role": "Interviewer"})
+      for er in cur_er:
+        for interview in er['interviews']:
+          if interview[1][0] == person['_id']:
+            interviewer = {
+              "_id": er['_id'],
+              "name": er['name'],
+              "team": er['team']
+            }
+            interviewers.append(interviewer)
+      interviewee['interviewers'] = interviewers
+      all_interviewee.append(interviewee)
+    
+    new_list = sorted(all_interviewee, key=lambda k: k['final_time']) 
+
+    result['interviews'] = new_list
+
+    print(result)
+
+    return jsonify(result), 200
+  
+  def get_role(self):
+    user = session['user']
+    result = {'role': user['role']}
     return jsonify(result), 200
