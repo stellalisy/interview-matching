@@ -33,7 +33,7 @@ class IntervieweeSchedule extends React.Component {
         <p><strong>Name:</strong> {this.props.name}</p>
         <p><strong>Interest 1:</strong>  {this.props.interest1}</p>
         <p><strong>Interest 2:</strong> {this.props.interest2}</p>
-        <p id="interview_time"><strong>Interview Time: {final}</strong></p>
+        <p id="interview_time"><strong>Interview Time: </strong>{final}</p>
         <div className="center">
           <br /><a href="#!" onClick={() => this.props.callback()} className="btn btn--secondary">Sign Out</a>
         </div>
