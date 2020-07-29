@@ -37,7 +37,7 @@ class Interviewee extends React.Component {
     try {
       var state = cloneDeep(this.state)
       Reflect.deleteProperty(state, 'error')
-      var { data: data } = await axios.post('/admin/update',
+      var { data: data } = await axios.post('/api/admin/update',
         qs.stringify(state),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       )

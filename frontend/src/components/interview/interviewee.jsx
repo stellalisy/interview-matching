@@ -58,7 +58,7 @@ class Interviewee extends React.Component {
     e.preventDefault();
     var { interest1, grid, interest2 } = this.state
     try {
-      var { data: data } = await axios.post('/interviewee/update',
+      var { data: data } = await axios.post('/api/interviewee/update',
         { interest1, grid, interest2 }
       )
       var error = data.error

@@ -58,7 +58,7 @@ class Interviewer extends React.Component {
     e.preventDefault();
     var { max_int, grid, team } = this.state
     try {
-      var { data: data } = await axios.post('/interviewer/update',
+      var { data: data } = await axios.post('/api/interviewer/update',
         { max_int, grid, team }
       )
       var error = data.error

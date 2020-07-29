@@ -29,7 +29,7 @@ class Login extends React.Component {
     e.preventDefault();
     var { email, password } = this.state
     try {
-      var { data: data } = await axios.post('/user/login',
+      var { data: data } = await axios.post('/api/user/login',
         qs.stringify({ email, password }),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       )

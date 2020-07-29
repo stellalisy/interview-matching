@@ -39,7 +39,7 @@ class Signup extends React.Component {
       role
     } = this.state
     try {
-      var { data: data } = await axios.post('/user/signup',
+      var { data: data } = await axios.post('/api/user/signup',
         qs.stringify({ name, email, password, password2, role }),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       )
