@@ -38,17 +38,17 @@ class Interview extends React.Component {
 
   login = async (user, checkSchedule = false) => {
     if (user.role === 'Admin' && checkSchedule) {
-      var { data: data } = await axios.get('/get-interviewee')
+      var { data: data } = await axios.get('/api/get-interviewee')
       this.setState({ user, info: data, checkSchedule })
     } else {
-      var { data: data } = await axios.get('/get-time')
+      var { data: data } = await axios.get('/api/get-time')
       this.setState({ user, info: data, checkSchedule })
     }
   }
 
   scheduleSignout = async () => {
     try {
-      await axios.get('/user/signout-schedule')
+      await axios.get('/api/user/signout-schedule')
       this.setState({ user: null, success: false, checkSchedule: false })
     } catch (err) {
       console.log(err)
@@ -57,7 +57,7 @@ class Interview extends React.Component {
 
   signout = async () => {
     try {
-      await axios.get('/user/signout')
+      await axios.get('/api/user/signout')
       this.setState({ user: null, success: false })
     } catch (err) {
       console.log(err)

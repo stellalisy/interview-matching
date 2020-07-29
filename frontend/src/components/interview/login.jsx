@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios'
 import qs from 'qs'
 import axios from './request'
 
