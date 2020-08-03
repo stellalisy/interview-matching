@@ -2,3 +2,4 @@ flask
 pymongo
 passlib
 python-dotenv
+gunicorn

@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios'
+import axios from './request'
 import qs from 'qs'
 import dayjs from 'dayjs'
 
@@ -118,12 +118,9 @@ class Interviewer extends React.Component {
             return (
               <div key={`${i1}`} className="row">
                 <span className="row-cell" key={`row-${i1}`}>
-                  {(this.state.start_time + i1) % 2 ?
-                    Math.floor((this.state.start_time % 24) / 2) +
-                    Math.floor(i1 / 2) + ":30" +
-                    (this.state.start_time < 24 ? "AM" : "PM") :
-                    (this.state.start_time % 24) / 2 + i1 / 2 + ":00" +
-                    (this.state.start_time < 24 ? "AM" : "PM")}
+                  {(this.state.start_time + i1) % 2 ? 
+                    Math.floor((this.state.start_time % 24) / 2) + Math.floor(i1 / 2) + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : 
+                    Math.floor((this.state.start_time % 24) / 2) + Math.floor(i1 / 2) + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
                 </span>
                 {Array.from({ length: this.state.days }).map((o2, i2) => {
                   return (
