@@ -8,7 +8,7 @@ class Success extends React.Component {
   render() {
     return (
       <div className="card">
-        <h1 className="center">Your Information Has Been Saved!</h1>
+        <h2 className="center">Your Information Has Been Saved!</h2>
         <div className="center">
           <a
             href="#!"
