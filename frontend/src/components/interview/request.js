@@ -5,7 +5,7 @@ let baseURL;
 if (process.env.NODE_ENV === 'development') {
     baseURL = '/api';
 } else if (process.env.NODE_ENV === 'production') {
-    baseURL = '/api/interview';
+    baseURL = '/interview';
 }
 
 axios.defaults.baseURL = baseURL
