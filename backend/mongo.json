@@ -1,5 +1,7 @@
 {
-  "host": "hophacks-site.2jqu8.mongodb.net",
-  "password": "HopH@cks3000!",
-  "user": "admin"
+  "host": "hophacks-site-shard-00-00-2jqu8.mongodb.net",
+  "port": 8001,
+  "password": "HopHacks!8!",
+  "user": "admin",
+  "database": "interview_matcher"
 }
