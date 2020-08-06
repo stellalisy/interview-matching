@@ -9,6 +9,26 @@ app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
 client = pymongo.MongoClient('localhost', 27017)
 db = client.interview_matcher
 
+#def init_database():
+#    import json
+#    try:
+#        from urllib.parse import quote_plus
+#    except ImportError:
+#        # Python 2.x
+#        from urllib import quote_plus
+
+#    with open('mongo.json') as f:
+#        config = json.load(f)
+#    uri = "mongodb://%s:%s@%s" % (
+#        quote_plus(config['user']), quote_plus(config['password']), quote_plus(config['host']))
+#    return pymongo.MongoClient(uri)
+
+
+#client = init_database()
+#db = client.meteor
+#app = Flask(__name__)
+#app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
+
 # Decorators
 def login_required(f):
   @wraps(f)

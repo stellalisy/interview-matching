@@ -3,13 +3,16 @@ from operator import itemgetter
 import json
 import uuid
 from passlib.hash import sha256_crypt
+import math
 
 def create_interviewee(data, n, days, hours):
     for i in range(n):
         int(i)
         person = {}
 
-        one_count = random.randint(5, 10)
+        min_one = math.floor(days*hours/5)
+        max_one = math.floor(days*hours/2)
+        one_count = random.randint(min_one, max_one)
         zero_count = days * hours - one_count
         my_list = [0]*zero_count + [1]*one_count
         random.shuffle(my_list)
@@ -68,8 +71,9 @@ def create_interviewer(data, n, days, hours):
     random.shuffle(team_list)
     for i in range(n):
         person = {}
-        #person_with_id = {}
-        one_count = random.randint(5, 15)
+        min_one = math.floor(days*hours/5)
+        max_one = math.floor(days*hours/3*2)
+        one_count = random.randint(min_one, max_one)
         zero_count = days * hours - one_count
         my_list = [0]*zero_count + [1]*one_count
         random.shuffle(my_list)
@@ -108,12 +112,30 @@ def create_interviewer(data, n, days, hours):
         person['password'] = sha256_crypt.hash('123')
         data.append(person)
 
+def create_admin(data, days, hours):
+    person = {}
+    person['_id'] = uuid.uuid4().hex
+    person['email'] = 'admin@g'
+    person['name'] = 'admin'
+    person['password'] = sha256_crypt.hash('123')
+    person['role'] = 'Admin'
+    person['event'] = 'HopHacks Fall 2020 Interview'
+    person['start_date'] = '2020-07-27'
+    person['end_date'] = '2020-07-30'
+    person['start_time'] = 31
+    person['end_time'] = 38
+    person['days'] = 4
+    person['hours'] = 7
+    data.append(person)
+
+
 def main():
     data = []
-    days = 3
-    hours = 6
+    days = 4
+    hours = 7
     create_interviewee(data, 20, days, hours)
     create_interviewer(data, 15, days, hours)
+    create_admin(data, days, hours)
 
     with open('data.json', 'w') as file:
         file.write(json.dumps(data))

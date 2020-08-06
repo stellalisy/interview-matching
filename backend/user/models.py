@@ -29,23 +29,20 @@ class User:
     }
 
     # Encrypt the password
-    print(user['password'])
-
     user['password'] = sha256_crypt.hash(user['password'])
-    print(user['password'])
 
     #user['password2'] = pbkdf2_sha256.encrypt(user['password2'])
 
     # Check for existing email address
-    if db.users.find_one({ "email": user['email'] }):
+    if db.interview_users.find_one({ "email": user['email'] }):
       # return jsonify({ "error": "Email address already in use" }), 400
       return jsonify({ "error": "Email address already in use" })
 
-    if db.users.find_one({ "role": "Admin"}) and user['role'] == "Admin":
+    if db.interview_users.find_one({ "role": "Admin"}) and user['role'] == "Admin":
       # return jsonify({ "error": "Admin account already signed up" }), 400
       return jsonify({ "error": "Admin account already signed up" })
 
-    if db.users.insert_one(user):
+    if db.interview_users.insert_one(user):
       return self.start_session(user)
 
     # return jsonify({ "error": "Signup failed" }), 400
@@ -66,7 +63,7 @@ class User:
     # return redirect('/check-schedule/')
   
   def login(self):
-    user = db.users.find_one({
+    user = db.interview_users.find_one({
       "email": request.form.get('email')
     })
 
@@ -77,7 +74,7 @@ class User:
     return jsonify({ "error": "Invalid login credentials" })
 
   def check(self):
-    user = db.users.find_one({
+    user = db.interview_users.find_one({
       "email": request.form.get('email')
     })
 
@@ -100,7 +97,7 @@ class User:
                     'time': data['grid']
                 } }
     
-    db.users.update_one(query, newvalues)
+    db.interview_users.update_one(query, newvalues)
 
     return jsonify(user), 200
 
@@ -119,7 +116,7 @@ class User:
                     'time': data['grid']
                 } }
     
-    db.users.update_one(query, newvalues)
+    db.interview_users.update_one(query, newvalues)
 
     return jsonify(user), 200
 
@@ -128,8 +125,8 @@ class User:
     print("update admin")
 
     # Check for existing event name
-    if db.users.find_one({ "event": request.form.get('event') }):
-      if (db.users.find_one({ "event": request.form.get('event') })['_id'] != session['user']['_id']):
+    if db.interview_users.find_one({ "event": request.form.get('event') }):
+      if (db.interview_users.find_one({ "event": request.form.get('event') })['_id'] != session['user']['_id']):
         # return jsonify({ "error": "Event name already in use" }), 400
         return jsonify({ "error": "Event name already in use" })
 
@@ -176,12 +173,12 @@ class User:
                 } }
 
     
-    db.users.update_one(query, newvalues)
+    db.interview_users.update_one(query, newvalues)
 
     return jsonify(user), 200
   
   def get_time(self):
-    adminAccount = db.users.find_one({"role": "Admin"})
+    adminAccount = db.interview_users.find_one({"role": "Admin"})
     user = session['user']
     result = {
       'start_time': adminAccount['start_time'],
@@ -198,7 +195,7 @@ class User:
     return jsonify(result), 200
   
   def get_interviewee(self):
-    cur_ee = db.users.find({"role": "Interviewee"})
+    cur_ee = db.interview_users.find({"role": "Interviewee"})
     
     user = session['user']
 
@@ -220,7 +217,7 @@ class User:
               "final_time": person['final_time']
       }
       interviewers = []
-      cur_er = db.users.find({"role": "Interviewer"})
+      cur_er = db.interview_users.find({"role": "Interviewer"})
       for er in cur_er:
         for interview in er['interviews']:
           if interview[1][0] == person['_id']:

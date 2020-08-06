@@ -1,6 +1,6 @@
 import React from "react";
-import axios from 'axios'
 import qs from 'qs'
+import axios from './request'
 
 class Signup extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class Signup extends React.Component {
       role
     } = this.state
     try {
-      var { data: data } = await axios.post('/user/signup',
+      var { data: data } = await axios.post('/api/user/signup',
         qs.stringify({ name, email, password, password2, role }),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       )

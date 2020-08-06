@@ -1,6 +1,6 @@
 import React from "react";
-import axios from 'axios'
 import qs from 'qs'
+import axios from './request'
 import dayjs from 'dayjs'
 
 class Interviewer extends React.Component {
@@ -36,6 +36,7 @@ class Interviewer extends React.Component {
       hours,
       grid: Array(hours * 2).fill(0).map(() => Array(days).fill(0))
     })
+
   }
 
   toggle(i1, i2) {
@@ -58,7 +59,7 @@ class Interviewer extends React.Component {
     e.preventDefault();
     var { max_int, grid, team } = this.state
     try {
-      var { data: data } = await axios.post('/interviewer/update',
+      var { data: data } = await axios.post('/api/interviewer/update',
         { max_int, grid, team }
       )
       var error = data.error
@@ -118,12 +119,9 @@ class Interviewer extends React.Component {
             return (
               <div key={`${i1}`} className="row">
                 <span className="row-cell" key={`row-${i1}`}>
-                  {(this.state.start_time + i1) % 2 ?
-                    Math.floor((this.state.start_time % 24) / 2) +
-                    Math.floor(i1 / 2) + ":30" +
-                    (this.state.start_time < 24 ? "AM" : "PM") :
-                    (this.state.start_time % 24) / 2 + i1 / 2 + ":00" +
-                    (this.state.start_time < 24 ? "AM" : "PM")}
+                  {(this.state.start_time + i1) % 2 ? 
+                    Math.floor((this.state.start_time % 24) / 2) + Math.floor(i1 / 2) + ":30" + (this.state.start_time < 24 ? "AM" : "PM") : 
+                    Math.floor((this.state.start_time % 24) / 2) + Math.floor(i1 / 2) + ":00" + (this.state.start_time < 24 ? "AM" : "PM")}
                 </span>
                 {Array.from({ length: this.state.days }).map((o2, i2) => {
                   return (

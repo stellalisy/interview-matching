@@ -5,7 +5,7 @@ $("form[name=signup_form").submit(function(e) {
   var data = $form.serialize();
 
   $.ajax({
-    url: "/user/signup",
+    url: "/api/user/signup",
     type: "POST",
     data: data,
     dataType: "json",
@@ -27,7 +27,7 @@ $("form[name=login_form").submit(function(e) {
   var data = $form.serialize();
 
   $.ajax({
-    url: "/user/login",
+    url: "/api/user/login",
     type: "POST",
     data: data,
     dataType: "json",
@@ -49,7 +49,7 @@ $("form[name=check_form").submit(function(e) {
   var data = $form.serialize();
 
   $.ajax({
-    url: "/user/check",
+    url: "/api/user/check",
     type: "POST",
     data: data,
     dataType: "json",
@@ -113,7 +113,7 @@ $("form[name=admin_form").submit(function(e) {
   var data = $form.serialize();
 
   $.ajax({
-    url: "/admin/update",
+    url: "/api/admin/update",
     type: "POST",
     data: data,
     dataType: "json",

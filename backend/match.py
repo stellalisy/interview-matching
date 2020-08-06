@@ -30,6 +30,8 @@ def get_roles(data):
             user['max_int'] = int(user['max_int'])
             #user.pop('password', None)
             interviewer.append(user)
+        elif user['role'] == 'Admin':
+            admin = user
         
     for person in interviewee:
         person['final_time'] = 100
@@ -37,7 +39,7 @@ def get_roles(data):
         person['num_int'] = 0
         person['interviews'] = {}
 
-    return [interviewee,interviewer]
+    return [interviewee, interviewer, admin]
 
 def is_available(interviewer, team, i):
     order = list(range(0,len(interviewer)))
@@ -137,12 +139,15 @@ def iterated_match(interviewee, interviewer):
     return [ee, er, num_match]
 
 def main():
-    with open('from_mongo.json', 'r') as file:
+    with open('data.json', 'r') as file:
         data = json.load(file)
 
     people = get_roles(data)
     interviewee = people[0]
     interviewer = people[1]
+    admin = people[2]
+
+    all_data = [admin]
 
     min_std = 10000
     max_match = 0
@@ -186,7 +191,7 @@ def main():
         person['interviews'] = int_list
     print("num_match={}, std={}".format(max_match, min_std))
 
-    all_data = interviewee
+    all_data.extend(interviewee)
     all_data.extend(interviewer)
 
     with open('matched.json', 'w') as file:

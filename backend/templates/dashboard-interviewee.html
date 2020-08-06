@@ -11,7 +11,7 @@
       <strong>Role:</strong> {{ "Interviewee" }}
     </p>
     <div class="center">
-      <br><a href="/user/signout" class="btn btn--secondary">Sign Out</a>
+      <br><a href="/api/user/signout" class="btn btn--secondary">Sign Out</a>
     </div>
   </div>
 
@@ -33,7 +33,7 @@
     }
 
     componentDidMount() {
-      fetch('/get-time', {
+      fetch('/api/get-time', {
         method: 'GET',
       }).then(res => res.json())
         .then(json => {             
