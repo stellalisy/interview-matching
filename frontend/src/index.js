@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import Interview from './components/Interview';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Interview />, document.getElementById('root'));
