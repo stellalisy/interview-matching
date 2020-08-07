@@ -26,8 +26,7 @@ def init_database():
 
     with open('mongo.json') as f:
         config = json.load(f)
-    uri = "mongodb://%s:%s@%s" % (
-        quote_plus(config['user']), quote_plus(config['password']), quote_plus(config['host']))
+    uri = config['mongo_uri']
     return pymongo.MongoClient(uri)
 
 #client = pymongo.MongoClient('localhost', 27017)
@@ -42,3 +41,6 @@ def index():
 
 # Routes
 from user import routes
+
+if __name__ == '__main__':
+    app.run()
