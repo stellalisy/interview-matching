@@ -15,6 +15,11 @@ class InterviewerSchedule extends React.Component {
     var num_int = result['num_int'];
     var interviews = result['interviews'];
     var list = Array.from({ length: num_int })
+    console.log(result)
+    if (!num_int){
+      num_int = '0'
+    }
+
 
     return (
       <div className="card">
@@ -23,7 +28,7 @@ class InterviewerSchedule extends React.Component {
           <strong>Name:</strong> {this.props.name}<br />
           <strong>Role:</strong> {this.props.role}<br />
           <strong>Team:</strong> {this.props.team}<br />
-          <strong>Interviews:</strong>{this.props.num_int} interview(s) in total.<br />
+          <strong>Interviews: </strong>{this.props.num_int} interview(s) in total.<br />
         </p>
         <table>
           <thead>
